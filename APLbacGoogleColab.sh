@@ -6,13 +6,14 @@
 # Define parameters
 start_value=$1
 end_value=$1
+tsi = $2
 echo "APL script initiated with APL value $1.. loading"
 # Loop to create input.str files and carry out subsequent steps
 current_value=$start_value
 
 
     # Step 3
-    ./PLM -TSfile 3_Bigcare.tsi -Mashno 3 -bilayerThickness 4.3 -rescalefactor 2 2 2 -o 4_Lipidx_$current_value
+    ./PLM -TSfile $2 -Mashno 3 -bilayerThickness 4.3 -rescalefactor 2 2 2 -o 4_Lipidx_$current_value
 
     # Create input.str file
     echo -e "[Lipids List]\nDomain 0\nPOPG 0.2 0.2 $current_value\\nPOPE 0.78 0.78 $current_value\nCDL1 0.02 0.02 $current_value\nEnd" > inputx_$current_value.str
@@ -42,7 +43,7 @@ END
     gmx grompp -f em.mdp -o emx_$current_value -c 7_Lipidx_$current_value.gro -p topol.top
 
     # Step 10
-    gmx_d mdrun -deffnm emx_$current_value -v
+    gmx mdrun -deffnm emx_$current_value -v
 
     # Step 11
     gmx solvate -cs ~/water.gro -o 8_Lipidx_$current_value.gro -radius 0.21 -cp emx_$current_value.gro -p topol.top
@@ -51,7 +52,7 @@ END
     gmx grompp -f em.mdp -o 9_Lipidx_$current_value -c 8_Lipidx_$current_value.gro
 
     # Step 13
-    gmx_d mdrun -deffnm 9_Lipidx_$current_value -v
+    gmx mdrun -deffnm 9_Lipidx_$current_value -v
 
     # Step 14
     gmx grompp -f em.mdp -o neutral_$current_value.tpr -p topol.top -c 9_Lipidx_$current_value.gro 
@@ -63,7 +64,7 @@ END
     gmx grompp -f em.mdp -o 11_Lipid20x_$current_value.tpr -p topol.top -c 10_Lipidx_$current_value.pdb
 
     # Step 17
-    gmx_d mdrun -deffnm 11_Lipid20x_$current_value -v
+    gmx mdrun -deffnm 11_Lipid20x_$current_value -v
 
     mkdir APL20bac_$current_value
 
@@ -71,12 +72,11 @@ END
     gmx grompp -f mdp_files/cgmdprepx.mdp -o 11b_Lipid20_$current_value.tpr -c 11_Lipid20x_$current_value.gro -p topol.top
 
     # Step 17
-    gmx_d mdrun -deffnm 11b_Lipid20_$current_value -v
+    gmx mdrun -deffnm 11b_Lipid20_$current_value -v
 
     # Step 19
     
-    gmx grompp -f mdp_files/cgmd-10us-2024tpr.mdp -o APL20bac_$current_value/12_md20_$current_value -c 11b_Lipid20_$current_value.gro -p topol.top
-	 mv topol.top > APL20bac_$current_value
+    gmx editconf -f 11b_Lipid20_$current_value -o 11b_$current_value.pdb
 
 
 
