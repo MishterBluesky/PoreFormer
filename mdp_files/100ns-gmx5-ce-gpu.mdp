@@ -1,0 +1,65 @@
+integrator           = md
+tinit                = 0.0
+dt                   = 0.002
+nsteps               = 50000000
+nstxout              = 500000
+nstvout              = 500000
+nstfout              = 0
+nstlog               = 5000
+nstenergy            = 5000
+nstxtcout            = 5000
+coulombtype          = PME
+vdw-type             = Cut-off
+Tcoupl               = V-rescale 
+tc-grps              = Protein Lipid SOL_ION
+tau-t                = 0.1 0.1 0.1 
+ref-t                = 300. 300. 300.
+energygrps           = Protein Lipid SOL_ION
+Pcoupl               = Parrinello-Rahman
+Pcoupltype           = semiisotropic
+tau-p                = 1.0 1.0
+compressibility      = 4.5E-5 4.5E-5
+ref-p                = 1.0 1.0
+gen_vel              = yes  
+gen-temp             = 300
+gen-seed             = -1
+constraints          = all-bonds
+constraint-algorithm = Lincs
+
+cutoff-scheme       =  Verlet           ; To run on GPUs
+verlet-buffer-tolerance =  0.005        ; indirectly sets rlist
+vdw-modifier        =  Potential-shift-Verlet        ; Shifts the vdw to be zero at cutoff
+rlist               =  1.0		; Cut-off for making neighbor list (short range forces), ignored by Verlet
+DispCorr            =  EnerPres
+
+; Swap coordinates: no, X, Y, Z, auto
+swapcoords               = Z
+; Swap attempt frequency
+swap_frequency           = 100
+; Two index groups that contain the compartment-partitioning atoms
+split_group0             = CRCB_A
+split_group1             = CRCB_B
+; Use center of mass of split groups (yes/no), otherwise geometrical center is used
+massw_split0             = no
+massw_split1             = no
+; Group name of ions that can be exchanged with solvent molecules
+swap_group               = ION
+; Group name of solvent molecules
+solvent_group            = SOL
+; Split cylinder: radius, upper and lower extension [nm] (this will define the channels)
+cyl0_r    = 5.0
+cyl0_up   = 1.0 
+cyl0_down = 1.0 
+cyl1_r    = 5.0
+cyl1_up   = 1.0 
+cyl1_down = 1.0 
+; Average the number of ions per compartment over these many swap attempt steps
+coupl_steps              = 10
+; Requested number of anions and cations for each of the two compartments
+; -1 means fix the numbers as found in time step 0
+anionsA                  = 116
+cationsA                 = 101
+anionsB                  = 100
+cationsB                 = 101
+; Start to swap ions if threshold difference to requested count is reached
+threshold                = 1
