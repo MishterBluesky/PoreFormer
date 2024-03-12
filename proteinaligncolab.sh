@@ -10,11 +10,11 @@ tsi_file=$3
 protein_pdb=$4
 protein_number=$5
 vertex_1=$6
-workdir =$7
-Poredir =$8
+workdir=$7
+Poredir=$8
 
 ./tsimodifier.sh $tsi_file $protein_number $vertex_1
-./martinish.sh $name $protein_pdb $workdir $Poredir
+./martinishcolab.sh $name $protein_pdb $workdir $Poredir
 
 
 current_value=$start_value
