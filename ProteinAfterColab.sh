@@ -18,7 +18,7 @@ current_value=$start_value
     gmx_d mdrun -deffnm emx_$name -v
 
     # Step 11
-    gmx solvate -cs ~/water.gro -o 8_Lipidx_$name.gro -radius 0.21 -cp emx_$name.gro -p topol.top
+    gmx solvate -cs water.gro -o 8_Lipidx_$name.gro -radius 0.21 -cp emx_$name.gro -p topol.top
 
     # Step 12
     gmx grompp -f em.mdp -o 9_Lipidx_$name -c 8_Lipidx_$name.gro -maxwarn 1000
