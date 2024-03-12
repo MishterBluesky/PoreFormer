@@ -9,7 +9,6 @@ cd $workdir
 mv molecule_0.itp $Poredir/$1.itp
 cd $Poredir
 sed -i "s/molecule_0/$1/g" $1.itp
-gmx editconf -f $1.pdb -o $1.gro
 sed -i "1s/.*/$1/" $1.gro
 filename="$1.str"
 # Define the text content
