@@ -2,34 +2,27 @@
 
 # Check for correct number of arguments
 if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <protein1.pdb> <protein2.pdb>"
+    echo "Usage: $0 <protein_with_dum.pdb> <output_file.txt>"
     exit 1
 fi
 
-# Input pdb files
-protein1_pdb="$1"
-protein2_pdb="$2"
+# Input pdb file
+protein_with_dum="$1"
 
-# Output files
-protein1_com="protein1_com.zvg"
-protein2_com="protein2_com.zvg"
+# Output file
+output_file="$2"
 
-# Step 1: Calculate center of mass for each protein
-gmx editconf -f "$protein1_pdb" -o temp_protein1.pdb -c
-gmx editconf -f "$protein2_pdb" -o temp_protein2.pdb -c
+# Calculate center of mass for carbon backbone atoms
+backbone_com=$(awk '/^ATOM/ && $3 == "C" {sum+=$7; count++} END {printf "%.6f", sum/count}' "$protein_with_dum")
 
-gmx gyrate -f temp_protein1.pdb -s temp_protein1.pdb -o "$protein1_com"
-gmx gyrate -f temp_protein2.pdb -s temp_protein2.pdb -o "$protein2_com"
+# Difference in z-position between backbone COM and DUM oxygen z-coordinate (15)
+difference_z=$(echo "$backbone_com 15" | awk '{printf "%.2f", $2 - $1}')
 
-# Step 2: Extract COM z-coordinates and calculate difference
-protein1_com_z=$(awk '{if ($1 != "@" && $1 != "#" && NF) print $2}' "$protein1_com")
-protein2_com_z=$(awk '{if ($1 != "@" && $1 != "#" && NF) print $2}' "$protein2_com")
+echo "Backbone COM: $backbone_com"
+echo "Difference in z-position: $difference_z"
 
-# Calculate difference in z-position
-difference_z=$(awk 'BEGIN {sum=0} {sum+=$1} END {print sum/NR}' <(paste <(echo "$protein1_com_z") <(echo "$protein2_com_z" ) | awk '{print $2 - $1}'))
+# Output the result to the specified output file
+echo "Backbone COM: $backbone_com" > "$output_file"
+echo "Difference in z-position: $difference_z" >> "$output_file"
 
-# Output results
-echo "Average Difference in Z-Position: $difference_z"
-
-# Clean up temporary files
-rm temp_protein1.pdb temp_protein2.pdb
+echo "Difference calculation complete. Result saved in $output_file"
