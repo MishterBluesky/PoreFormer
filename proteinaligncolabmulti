@@ -29,11 +29,11 @@ current_value=$start_value
     ./PLM -TSfile modified.tsi -Mashno 3 -bilayerThickness 4.3 -rescalefactor 2 2 2 -o 4_Lipidx_$current_value
 
     # modify the existing str file
-    echo  -e "[Lipids List]\nDomain 0\nPOPG 0.2 0.2 $current_value\\nPOPE 0.78 0.78 $current_value\nCDL1 0.02 0.02 $current_value\nEnd" >> $name.str
+    echo  -e "[Lipids List]\nDomain 0\nPOPG 0.2 0.2 $current_value\\nPOPE 0.78 0.78 $current_value\nCDL1 0.02 0.02 $current_value\nEnd" >> $name$name2.str
 
     # Step 4
 
-    ./PCG -dts 4_Lipidx_$current_value -str $name.str -seed 1 -Bondlength 0.4 -LLIB Martini3.LIB -defout 5_Lipidx_$current_value
+    ./PCG -dts 4_Lipidx_$current_value -str $name$name2.str -seed 1 -Bondlength 0.4 -LLIB Martini3.LIB -defout 5_Lipidx_$current_value
 
     # Step 5
     python << END
