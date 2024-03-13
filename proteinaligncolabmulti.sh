@@ -18,7 +18,7 @@ workdir2=$12
 vertex_2=$13
 
 ./tsimodifiermulti.sh $tsi_file $protein_number $vertex_1 $vertex_2
-./martinishcolabmulti.sh $name $protein_pdb $workdir $Poredir $name2 $protein_pdb_2 $workdir2 
+./martinishmulti.sh $name $protein_pdb $workdir $Poredir $name2 $protein_pdb_2 $workdir2 
 
 
 current_value=$start_value
