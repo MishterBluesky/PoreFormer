@@ -13,9 +13,9 @@ vertex_1=$6
 workdir=$7
 Poredir=$8
 protein_pdb_2=$9
-name2=$11
-workdir2=$12
-vertex_2=$13
+name2=${10}
+workdir2=${11}
+vertex_2=${12}
 
 ./tsimodifiermulti.sh $tsi_file $protein_number $vertex_1 $vertex_2
 ./martinishmulti.sh $name $protein_pdb $workdir $Poredir $name2 $protein_pdb_2 $workdir2 
