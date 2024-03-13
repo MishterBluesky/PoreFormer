@@ -16,9 +16,11 @@ protein_pdb_2=$9
 name2=${10}
 workdir2=${11}
 vertex_2=${12}
+translate_1=${13}
+translate_2=${14}
 
 ./tsimodifiermulti.sh $tsi_file $protein_number $vertex_1 $vertex_2
-./martinishmulti.sh $name $protein_pdb $workdir $Poredir $name2 $protein_pdb_2 $workdir2 
+./martinishmulti.sh $name $protein_pdb $workdir $Poredir $name2 $protein_pdb_2 $workdir2 ${13} ${14}
 
 
 current_value=$start_value
