@@ -7,6 +7,8 @@ Poredir=$4
 name2=$5
 protein_pdb_2=$6
 workdir2=$7
+translate1=$8
+translate2=$9
 
 echo "Martinish is making a backup of $2 called Untouched_$2"
 cd $workdir
@@ -24,7 +26,7 @@ sed -i "1s/.*/$5/" $5.gro
 
 filename="$1$5.str"
 # Define the text content
-content="include $1.gro\ninclude $5.gro\n[Protein List]\n$1 1 0.01 0 0 -3\n$5 2 0.01 0 0 -3\nEnd Protein\n"
+content="include $1.gro\ninclude $5.gro\n[Protein List]\n$1 1 0.01 0 0 ${8} \n$5 2 0.01 0 0 ${9} \nEnd Protein\n"
 
 # Write the content to the file
 echo -e "$content" > "$filename"
