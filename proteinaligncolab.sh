@@ -12,9 +12,10 @@ protein_number=$5
 vertex_1=$6
 workdir=$7
 Poredir=$8
+translate=$9
 
 ./tsimodifier.sh $tsi_file $protein_number $vertex_1
-./martinishcolab.sh $name $protein_pdb $workdir $Poredir
+./martinishcolab.sh $name $protein_pdb $workdir $Poredir $9
 
 
 current_value=$start_value
