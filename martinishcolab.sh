@@ -7,9 +7,8 @@ Poredir=$4
 translate=$5
 echo "Martinish is making a backup of $2 called Untouched_$2"
 cd $workdir
-mv molecule_0.itp $Poredir/$1.itp
+mv *.itp $Poredir
 cd $Poredir
-sed -i "s/molecule_0/$1/g" $1.itp
 sed -i "1s/.*/$1/" $1.gro
 filename="$1.str"
 # Define the text content
