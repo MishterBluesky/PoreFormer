@@ -27,12 +27,23 @@ declare -A division_values=(
     echo '#include "martini_v3.0.0_ions_v1.itp"'
     echo '#include "martini_v3.0.0_solvents_v1.itp"'
     echo '#include "martini_v3.0.0_phospholipids_v1.itp"'
-    echo "#include \"$2.itp\""
+for itp_file in *.itp; do
+    if [[ ! "$itp_file" == *martini* ]]; then
+        echo "#include \"$itp_file\""
+    fi
+done
+
     echo "[system]"
     echo 'This system topolfile was made by topollipidp.sh'
     echo '[molecules]'
-    echo '; name  number'
-    echo "$2 $3"
+    echo '; name  /number'
+# Count the number of molecule_*.itp files
+file_count=$(ls -1 molecule_*.itp 2>/dev/null | wc -l)
+
+# Loop through the files and echo the names
+for ((i=0; i<$file_count; i++)); do
+    echo "molecule_${i} ${number}"
+done
 } > "$topol_file"
 
 # Initialize variables to keep track of the current molecule
