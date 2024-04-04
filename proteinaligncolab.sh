@@ -13,7 +13,13 @@ vertex_1=$6
 workdir=$7
 Poredir=$8
 translate=$9
-
+scale=${10}
+scale_z=${11}
+max=$(awk "BEGIN {printf \"%.2f\", 705 * ${10}}")
+min=$(awk "BEGIN {printf \"%.2f\", 315 * ${10}}")
+cutx=$(awk "BEGIN {printf \"%.2f\", 40.5 * ${10}}")
+cuty=$(awk "BEGIN {printf \"%.2f\", 40.5 * ${10}}")
+cutz=$(awk "BEGIN {printf \"%.2f\", 80 * ${11}}")
 ./tsimodifier.sh $tsi_file $protein_number $vertex_1
 ./martinishcolab.sh $name $protein_pdb $workdir $Poredir $9
 
@@ -37,13 +43,13 @@ current_value=$start_value
 import numpy as np
 import MDAnalysis as mda
 u = mda.Universe('5_Lipidx_$current_value.gro')
-ag = u.select_atoms("byres ((prop abs y < 705) and (prop abs y > 315) and (prop abs z < 705) and (prop abs z > 315)) ")
+ag = u.select_atoms("byres ((prop abs y < $max) and (prop abs y > $min) and (prop abs z < $max) and (prop abs z > $min)) ")
 ag.write('6_$name.gro')
 END
 
 
     # Step 7
-    gmx editconf -f 6_$name.gro -o 7_Lipidx_$name.gro -box 40.5 40.5 80 -rotate 0 90 0
+    gmx editconf -f 6_$name.gro -o 7_Lipidx_$name.gro -box $cutx $cuty $cutz -rotate 0 90 0
 
     # Step 19
     
