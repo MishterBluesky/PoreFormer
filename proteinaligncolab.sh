@@ -20,6 +20,9 @@ min=$(awk "BEGIN {printf \"%.2f\", 315 * ${10}}")
 cutx=$(awk "BEGIN {printf \"%.2f\", 40.5 * ${10}}")
 cuty=$(awk "BEGIN {printf \"%.2f\", 40.5 * ${10}}")
 cutz=$(awk "BEGIN {printf \"%.2f\", 80 * ${11}}")
+cardio=${12}
+popg=${13}
+pope=${14}
 ./tsimodifier.sh $tsi_file $protein_number $vertex_1
 ./martinishcolab.sh $name $protein_pdb $workdir $Poredir $9
 
@@ -32,7 +35,7 @@ current_value=$start_value
     ./PLM -TSfile modified.tsi -Mashno 3 -bilayerThickness 4.3 -rescalefactor 2 2 2 -o 4_Lipidx_$current_value
 
     # modify the existing str file
-    echo  -e "[Lipids List]\nDomain 0\nPOPG 0.2 0.2 $current_value\\nPOPE 0.78 0.78 $current_value\nCDL1 0.02 0.02 $current_value\nEnd" >> $name.str
+    echo  -e "[Lipids List]\nDomain 0\nPOPG $popg $popg $current_value\\nPOPE $pope $pope $current_value\nCDL1 $cardio $cardio $current_value\nEnd" >> $name.str
 
     # Step 4
 
