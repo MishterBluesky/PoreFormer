@@ -12,6 +12,7 @@ max=$(awk "BEGIN {printf \"%.2f\", 705 * $3}")
 min=$(awk "BEGIN {printf \"%.2f\", 315 * $3}")
 cutx=$(awk "BEGIN {printf \"%.2f\", 40.5 * $3}")
 cuty=$(awk "BEGIN {printf \"%.2f\", 40.5 * $3}")
+cutz=$(awk "BEGIN {printf \"%.2f\", 80 * $4}")
 echo "APL script initiated with APL value $1.. loading"
 # Loop to create input.str files and carry out subsequent steps
 current_value=$start_value
@@ -40,7 +41,7 @@ END
 
 
     # Step 7
-    gmx editconf -f 6_Lipidx_$current_value.gro -o 7_Lipidx_$current_value.gro -box $cutx $cuty 80 -rotate 0 90 0
+    gmx editconf -f 6_Lipidx_$current_value.gro -o 7_Lipidx_$current_value.gro -box $cutx $cuty $cutz -rotate 0 90 0
 echo "max: $max"
 echo "Value of \$3: $3"
 echo "$scale"
