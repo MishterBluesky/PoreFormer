@@ -18,7 +18,13 @@ workdir2=${11}
 vertex_2=${12}
 translate_1=${13}
 translate_2=${14}
-
+scale=${15}
+scale_z=${16}
+max=$(awk "BEGIN {printf \"%.2f\", 705 * ${15}}")
+min=$(awk "BEGIN {printf \"%.2f\", 315 * ${15}}")
+cutx=$(awk "BEGIN {printf \"%.2f\", 40.5 * ${15}}")
+cuty=$(awk "BEGIN {printf \"%.2f\", 40.5 * ${15}}")
+cutz=$(awk "BEGIN {printf \"%.2f\", 80 * ${16}}")
 ./tsimodifiermulti.sh $tsi_file $protein_number $vertex_1 $vertex_2
 ./martinishmulti.sh $name $protein_pdb $workdir $Poredir $name2 $protein_pdb_2 $workdir2 ${13} ${14}
 
@@ -42,13 +48,13 @@ current_value=$start_value
 import numpy as np
 import MDAnalysis as mda
 u = mda.Universe('5_Lipidx_$current_value.gro')
-ag = u.select_atoms("byres ((prop abs y < 705) and (prop abs y > 315) and (prop abs z < 705) and (prop abs z > 315)) ")
+ag = u.select_atoms("byres ((prop abs y < $max) and (prop abs y > $min) and (prop abs z < $max) and (prop abs z > $min)) ")
 ag.write('6_$name.gro')
 END
 
 
     # Step 7
-    gmx editconf -f 6_$name.gro -o 7_Lipidx_$name.gro -box 40.5 40.5 80 -rotate 0 90 0
+    gmx editconf -f 6_$name.gro -o 7_Lipidx_$name.gro -box $cutx $cuty $cutz -rotate 0 90 0
 
     # Step 19
     
