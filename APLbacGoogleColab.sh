@@ -22,7 +22,7 @@ current_value=$start_value
     ./PLM -TSfile $2 -Mashno 3 -bilayerThickness 4.3 -rescalefactor 2 2 2 -o 4_Lipidx_$current_value
 
     # Create input.str file
-    echo -e "[Lipids List]\nDomain 0\nPOPG $6 $6 $current_value\\nPOPE $5 $5 $current_value\nCDL1 $7 $7 $current_value\nEnd" > inputx_$current_value.str
+    echo -e "[Lipids List]\nDomain 0\nPOPG $6 $6 $current_value\\nPOPE $7 $7 $current_value\nCDL1 $5 $5 $current_value\nEnd" > inputx_$current_value.str
 
     # Step 4
 
