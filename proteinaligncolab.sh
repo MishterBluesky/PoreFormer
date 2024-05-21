@@ -32,7 +32,7 @@ current_value=$start_value
     ./compile.sh
 
     # Step 3
-    ./PLM -TSfile modified.tsi -Mashno 3 -bilayerThickness 4.3 -rescalefactor 2 2 2 -o 4_Lipidx_$current_value
+    ./PLM -TSfile modified.tsi -Mashno 4 -bilayerThickness 4.3 -rescalefactor 2 2 2 -o 4_Lipidx_$current_value
 
     # modify the existing str file
     echo  -e "[Lipids List]\nDomain 0\nPOPG $popg $popg $current_value\\nPOPE $pope $pope $current_value\nCDL1 $cardio $cardio $current_value\nEnd" >> $name.str
