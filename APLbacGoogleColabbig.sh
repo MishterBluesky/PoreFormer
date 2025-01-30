@@ -10,8 +10,8 @@ tsi=$2
 scale=$3
 max=$(awk "BEGIN {printf \"%.2f\", 705 * $3}")
 min=$(awk "BEGIN {printf \"%.2f\", 315 * $3}")
-cutx=$(awk "BEGIN {printf \"%.2f\", 40.5 * $3}")
-cuty=$(awk "BEGIN {printf \"%.2f\", 40.5 * $3}")
+cutx=$(awk "BEGIN {printf \"%.2f\", 40 * $3}")
+cuty=$(awk "BEGIN {printf \"%.2f\", 40 * $3}")
 cutz=$(awk "BEGIN {printf \"%.2f\", 80 * $4}")
 echo "APL script initiated with APL value $1.. loading"
 # Loop to create input.str files and carry out subsequent steps
