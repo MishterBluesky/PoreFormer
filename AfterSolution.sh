@@ -48,7 +48,7 @@ current_value=$start_value
 
     # Step 19
     
-    gmx grompp -f mdp_files/cgmd-500ns-2024tpr-protonly.mdp -o $name/12_md20_$name -c 11b_$name.gro -p topol.top -maxwarn 1000
+    gmx grompp -f cgmd-500ns-2024tpr-protonly.mdp -o $name/12_md20_$name -c 11b_$name.gro -p topol.top -maxwarn 1000
     mv topol.top > APL20bac_$name
 
 
