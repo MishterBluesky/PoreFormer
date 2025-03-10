@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 name=$1
@@ -12,7 +11,3 @@ cutx=$(awk "BEGIN {printf \"%.2f\", ${6}}")
 cuty=$(awk "BEGIN {printf \"%.2f\", ${6}}")
 cutz=$(awk "BEGIN {printf \"%.2f\", ${6}}")
 gmx editconf -f 6_$name.gro -o 7_$name.gro -box $cutx $cuty $cutz 
-
-    
-
-
