@@ -1,13 +1,44 @@
 #!/bin/bash
 
-name=$1
-protein_pdb=$2
-protein_number=$3
-workdir=$4
-Poredir=$5
-scale=${6}
-scale_z=${6}
-cutx=$(awk "BEGIN {printf \"%.2f\", ${6}}")
-cuty=$(awk "BEGIN {printf \"%.2f\", ${6}}")
-cutz=$(awk "BEGIN {printf \"%.2f\", ${6}}")
-gmx editconf -f 6_$name.gro -o 7_$name.gro -box $cutx $cuty $cutz 
+# Define the .gro file and output topol.top file names
+gro_file="$1"
+topol_file="topol.top"
+name=$2
+number=$3
+
+# Check if input files exist
+if [ ! -f "$gro_file" ]; then
+    echo "Error: $gro_file does not exist."
+    exit 1
+fi
+
+# Create the topol.top file with the header
+{
+    echo '#include "martini_v3.0.0.itp"'
+    echo '#include "martini_v3.0_CDLs.itp"'
+    echo '#include "martini_v3.0.0_ions_v1.itp"'
+    echo '#include "martini_v3.0.0_solvents_v1.itp"'
+    echo '#include "martini_v3.0.0_phospholipids_v1.itp"'
+
+    # Include all additional .itp files except martini ones
+    for itp_file in *.itp; do
+        if [[ ! "$itp_file" == *martini* ]]; then
+            echo "#include \"$itp_file\""
+        fi
+    done
+
+    echo ""
+    echo "[ system ]"
+    echo "This system topolfile was made by topolsolution.sh"
+    echo ""
+    echo "[ molecules ]"
+    echo "; name  /number"
+
+    # Extract molecule names dynamically from molecule_*.itp files, sorted numerically
+    for itp_file in $(ls molecule_*.itp 2>/dev/null | sort -V); do
+        molecule_name=$(basename "$itp_file" .itp)
+        echo "$molecule_name $number"
+    done
+} > "$topol_file"
+
+echo "Topology file '$topol_file' created successfully."
