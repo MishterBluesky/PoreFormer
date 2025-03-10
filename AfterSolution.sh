@@ -30,7 +30,7 @@ current_value=$start_value
     gmx grompp -f em.mdp -o neutral_$name.tpr -p topol.top -c 9_$name.gro -maxwarn 1000
 
     # Step 15
-    echo 16 | gmx genion -s neutral_$name.tpr -o 10_$name.pdb -p topol.top -neutral
+    echo 16 | gmx genion -s neutral_$name.tpr -o 10_$name.pdb -p topol.top -neutral -conc $3
 
     # Step 16
     gmx grompp -f em.mdp -o 11_$name.tpr -p topol.top -c 10_$name.pdb -maxwarn 1000
